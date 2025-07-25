@@ -52,7 +52,7 @@ const handleLogin = () => {
         type="submit"
         class="w-full py-2 rounded text-white font-semibold transition duration-300 cursor-pointer bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] bg-[length:200%_200%] animate-gradient"
       >
-        Entrar
+        ENTRAR
       </button>
 
       <p v-if="error" class="bg-red-400 p-2 rounded font-bold text-center mt-2">
