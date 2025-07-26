@@ -1,9 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import PhotoModal from "../components/PhotoModal.vue";
+
 
 const photos = ref([]);
 const loading = ref(true);
 const error = ref("");
+
+const selectedPhoto = ref(null);
 
 const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_KEY;
 
@@ -28,13 +32,21 @@ onMounted(async () => {
     const data = await response.json();
     photos.value = data;
 
-    localStorage.setItem("unsplashPhotos", JSON.stringify(data))
+    localStorage.setItem("unsplashPhotos", JSON.stringify(data));
   } catch (err) {
     error.value = err.message;
   } finally {
     loading.value = false;
   }
 });
+
+const openModal = (photo) => {
+  selectedPhoto.value = photo;
+};
+
+const closeModal = () => {
+  selectedPhoto.value = null;
+};
 </script>
 
 <template>
@@ -55,7 +67,8 @@ onMounted(async () => {
       <div
         v-for="photo in photos"
         :key="photo.id"
-        class="bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col h-[330px] w-full"
+        @click="openModal(photo)"
+        class="bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col h-[330px] w-full cursor-pointer hover:scale-[1.01] transition"
       >
         <img
           :src="photo.urls.small"
@@ -63,13 +76,18 @@ onMounted(async () => {
           class="h-[250px] w-full object-cover"
         />
         <div class="p-2 text-center">
-            <h3 class="text-xl text-gray-100">
-
-                {{ photo.user.name }}
-            </h3>
-            <p class="text-sm text-[#00ffd5]/60 line-clamp-1">{{ photo.description || 'Not Description' }}</p>
+          <h3 class="text-xl text-gray-100">{{ photo.user.name }}</h3>
+          <p class="text-sm text-[#f09433]/80 line-clamp-1">
+            {{ photo.description || "Not Description" }}
+          </p>
         </div>
       </div>
     </div>
   </div>
+
+  <PhotoModal
+    v-if="selectedPhoto"
+    :photo="selectedPhoto"
+    :onClose="closeModal"
+  />
 </template>
