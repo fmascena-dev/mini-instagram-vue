@@ -9,7 +9,7 @@ const error = ref("");
 
 const selectedPhoto = ref(null);
 
-const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_KEY;
+const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 onMounted(async () => {
   const cached = localStorage.getItem("unsplashPhotos");
