@@ -132,7 +132,7 @@ onUnmounted(() => {
             <div v-if="isImageLoaded">
               <h2 class="text-xl font-bold">{{ photo.user.name }}</h2>
 
-              <p v-if="photo.description" class="mt-2 text-gray-700">
+              <p v-if="photo.description" class="mt-2 text-gray-700 line-clamp-1">
                 {{ photo.description }}
               </p>
 
